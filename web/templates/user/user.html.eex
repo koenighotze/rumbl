@@ -1,0 +1,12 @@
+<div class="user">
+  <ul>
+    <li>
+      <label for="id">Id</label>
+      <span id="id"><%= @user.id %></span>
+    </li>
+    <li>
+      <label for="name">Name</label>
+      <span id="name"><%= @user.name %></span>
+    </li>
+  </ul>
+</div>
