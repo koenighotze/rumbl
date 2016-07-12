@@ -1,4 +1,7 @@
 <div class="jumbotron">
   <h2>Welcome to Beard Bonanza</h2>
   <p class="lead">Only Vikings and Santa Clause should have beards.</p>
+
+  <!-- TODO: check how to create such link -->
+  <%= link "Users", to: user_path(@conn, :index) %>
 </div>
