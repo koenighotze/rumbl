@@ -6,7 +6,7 @@ defmodule Rumbl.CheckLogin do
   def init(_opts) do
   end
 
-  def call(conn, repo) do
+  def call(conn, _repo) do
       case conn.assigns.current_user do
         nil -> conn
                |> put_flash(:error, "Please log in first")
