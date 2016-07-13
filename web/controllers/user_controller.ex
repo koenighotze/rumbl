@@ -1,15 +1,16 @@
 defmodule Rumbl.UserController do
   use Rumbl.Web, :controller
 
-  import Logger
+  # example of a plug function
+  plug :authenticate when action in [:index, :show]
+
+  # plug Rumbl.CheckLogin
 
   alias Rumbl.Repo
   alias Rumbl.User
 
   def index(conn, _params) do
     users = Repo.all(User)
-
-    info("users: #{inspect users}")
     render conn, "index.html", users: users
   end
 
@@ -31,13 +32,20 @@ defmodule Rumbl.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
            conn
+           |> Rumbl.Auth.login(user)
            |> put_flash(:info, "#{user.username} was created with id #{user.id}")
            |> redirect(to: user_path(conn, :index))
       {:error, changeset} -> render(conn, "new.html", changeset: changeset)
     end
   end
 
-  defp authenticate(conn) do
-    
+  defp authenticate(conn, _opts) do
+      case conn.assigns.current_user do
+        nil -> conn
+               |> put_flash(:error, "Please log in first")
+               |> redirect(to: page_path(conn, :index))
+               |> halt()
+        _ -> conn
+      end
   end
 end
