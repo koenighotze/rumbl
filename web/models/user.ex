@@ -12,6 +12,8 @@ defmodule Rumbl.User do
     field :password, :string, virtual: true
     field :password_hash, :string
 
+    has_many :beards, Rumbl.Beard
+
     timestamps
   end
 
