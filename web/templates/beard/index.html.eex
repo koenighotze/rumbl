@@ -1,0 +1,32 @@
+<h2>Listing beards</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Url</th>
+      <th>Name</th>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for beard <- @beards do %>
+    <tr>
+      <td><%= beard.user_id %></td>
+      <td><%= beard.url %></td>
+      <td><%= beard.name %></td>
+      <td><%= beard.description %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: beard_path(@conn, :show, beard), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: beard_path(@conn, :edit, beard), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: beard_path(@conn, :delete, beard), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New beard", to: beard_path(@conn, :new) %>

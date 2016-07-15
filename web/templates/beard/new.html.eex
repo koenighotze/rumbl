@@ -1,0 +1,6 @@
+<h2>New beard</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: beard_path(@conn, :create) %>
+
+<%= link "Back", to: beard_path(@conn, :index) %>

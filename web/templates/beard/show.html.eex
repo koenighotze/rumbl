@@ -1,0 +1,28 @@
+<h2>Show beard</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @beard.user_id %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @beard.url %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @beard.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @beard.description %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: beard_path(@conn, :edit, @beard) %>
+<%= link "Back", to: beard_path(@conn, :index) %>

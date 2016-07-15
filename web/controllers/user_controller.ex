@@ -2,7 +2,7 @@ defmodule Rumbl.UserController do
   use Rumbl.Web, :controller
 
   # example of a plug function
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show]
 
   # plug Rumbl.CheckLogin
 
@@ -39,13 +39,5 @@ defmodule Rumbl.UserController do
     end
   end
 
-  defp authenticate(conn, _opts) do
-      case conn.assigns.current_user do
-        nil -> conn
-               |> put_flash(:error, "Please log in first")
-               |> redirect(to: page_path(conn, :index))
-               |> halt()
-        _ -> conn
-      end
-  end
+
 end

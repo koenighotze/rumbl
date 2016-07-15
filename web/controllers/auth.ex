@@ -2,8 +2,10 @@ defmodule Rumbl.Auth do
   import Plug.Conn
 
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Phoenix.Controller
   import Logger
   alias Rumbl.User
+  alias Rumbl.Router.Helpers
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -39,5 +41,15 @@ defmodule Rumbl.Auth do
       true -> dummy_checkpw()
               {:error, :not_found, conn}
     end
+  end
+
+  def authenticate_user(conn, _opts) do
+      case conn.assigns.current_user do
+        nil -> conn
+               |> put_flash(:error, "Please log in first")
+               |> redirect(to: Helpers.page_path(conn, :index))
+               |> halt()
+        _ -> conn
+      end
   end
 end
