@@ -1,5 +1,7 @@
 <h2>New beard</h2>
 
+Create a new beard for user <%= @current_user.username %>
+
 <%= render "form.html", changeset: @changeset,
                         action: beard_path(@conn, :create) %>
 
