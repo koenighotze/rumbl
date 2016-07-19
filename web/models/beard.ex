@@ -15,6 +15,11 @@ defmodule Rumbl.Beard do
   @required_fields ~w(url name description)
   @optional_fields ~w(category_id)
 
+
+  def with_category(query) do
+    from b in query, preload: [:category]
+  end
+
   @doc """
   Creates a changeset based on the `model` and `params`.
 

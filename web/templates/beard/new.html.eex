@@ -2,7 +2,7 @@
 
 Create a new beard for user <%= @current_user.username %>
 
-<%= render "form.html", changeset: @changeset,
+<%= render "form.html", changeset: @changeset, categories: @categories,
                         action: beard_path(@conn, :create) %>
 
 <%= link "Back", to: beard_path(@conn, :index) %>

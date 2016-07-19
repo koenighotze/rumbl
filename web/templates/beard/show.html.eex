@@ -18,6 +18,11 @@
   </li>
 
   <li>
+    <strong>Category:</strong>
+    <%= @beard.category.name %>
+  </li>
+
+  <li>
     <strong>Description:</strong>
     <%= @beard.description %>
   </li>

@@ -16,7 +16,7 @@ defmodule Rumbl.Category do
   end
 
   def names_and_ids(query) do
-    from q in query, select: {q.id, q.name}
+    from q in query, select: {q.name, q.id}
   end
 
   @doc """

@@ -4,4 +4,5 @@
 
   <!-- TODO: check how to create such link -->
   <%= link "Users", to: user_path(@conn, :index) %>
+  <%= link "Beards", to: beard_path(@conn, :index) %>
 </div>

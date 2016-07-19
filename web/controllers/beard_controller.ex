@@ -56,7 +56,9 @@ defmodule Rumbl.BeardController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    beard = Repo.get!(user_beards(user), id)
+    # todo: results in 3 selects instead of a join? why
+    beard = Repo.get!(Beard.with_category(user_beards(user)), id)
+    # beard = Repo.get!(user_beards(user)), id)
     render(conn, "show.html", beard: beard)
   end
 
