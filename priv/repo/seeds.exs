@@ -9,3 +9,14 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+# populate beard categories
+
+alias Rumbl.Category
+alias Rumbl.Repo
+
+~w(Wolverine Kelly Retro Neck Manson UnaBomber BinLaden Lincoln Punch)
+|> Enum.each(fn cat ->
+  Repo.get_by(Category, name: cat)
+  || Repo.insert!(%Category{name: cat}) 
+end)

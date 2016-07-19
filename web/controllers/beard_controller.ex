@@ -2,10 +2,22 @@ defmodule Rumbl.BeardController do
   use Rumbl.Web, :controller
 
   alias Rumbl.Beard
+  alias Rumbl.Category
 
   plug :scrub_params, "beard" when action in [:create, :update]
+  plug :load_categories when action in [:create, :update, :new, :edit]
 
+  def load_categories(conn, _opts) do
+    cats = Category
+           |> Category.alphabetical
+           |> Category.names_and_ids
+           |> Repo.all
 
+    conn
+    |> assign(:categories, cats)
+  end
+
+  # pass user as thrid parameter to all methods
   def action(conn, _) do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
   end
