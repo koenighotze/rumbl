@@ -29,5 +29,7 @@ defmodule Rumbl.Category do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> unique_constraint(:name)
+    # TODO: check why this does not seem to work
+    |> foreign_key_constraint(:beards, name: :beards_category_id_fkey, message: "Still exists")
   end
 end
