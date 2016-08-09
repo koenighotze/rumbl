@@ -1,6 +1,12 @@
 defmodule Rumbl.BeardControllerIntegrationTest do
   use Rumbl.ConnCase
 
+  alias Rumbl.Beard
+  alias Rumbl.Repo
+
+  @valid_beard %{url: "http://foo.bar.baz", name: "The Lodbrok", description: "Crazy Viking"}
+  @invalid_beard %{}
+
   test "user must be authenticated", %{conn: conn} do
     conns = [
       get(conn, beard_path(conn, :new)),
@@ -35,4 +41,23 @@ defmodule Rumbl.BeardControllerIntegrationTest do
 
     refute String.contains?(html_response(conn, 200), "The Lodbrok")
   end
+
+  @tag login_as: "max"
+  test "beards are created and then redirected to", %{conn: conn, user: user} do
+    conn = post conn, beard_path(conn, :create), beard: @valid_beard
+    assert redirected_to(conn) == beard_path(conn, :index)
+
+    assert Repo.get_by(Beard, @valid_beard).user_id == user.id
+  end
+
+  @tag login_as: "max"
+  test "invalid beards are not created", %{conn: conn} do
+    beard_count_before = beard_count
+
+    conn = post conn, beard_path(conn, :create), beard: @invalid_beard
+    assert html_response(conn, 200) =~ "error"
+    assert beard_count_before == beard_count
+  end
+
+
 end

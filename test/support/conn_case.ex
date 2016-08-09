@@ -29,7 +29,7 @@ defmodule Rumbl.ConnCase do
 
       import Rumbl.Router.Helpers
 
-      import Rumbl.TestHelpers, only: [insert_user: 1, insert_beard: 2]
+      import Rumbl.TestHelpers, only: [insert_user: 1, insert_beard: 2, beard_count: 0]
 
       # The default endpoint for testing
       @endpoint Rumbl.Endpoint

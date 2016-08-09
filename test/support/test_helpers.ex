@@ -1,7 +1,9 @@
 defmodule Rumbl.TestHelpers do
+  import Ecto.Query
 
   alias Rumbl.Repo
   alias Rumbl.User
+  alias Rumbl.Beard
 
   @default_user %{username: "username", name: "name", password: "12345678"}
 
@@ -19,4 +21,8 @@ defmodule Rumbl.TestHelpers do
     |> Repo.insert!()
   end
 
+
+  def beard_count do
+    Repo.one(from b in Rumbl.Beard, select: count(b.id))
+  end
 end
