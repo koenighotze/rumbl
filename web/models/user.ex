@@ -40,4 +40,10 @@ defmodule Rumbl.User do
     end
   end
 
+  defimpl String.Chars, for: Rumbl.User do
+    def to_string(%Rumbl.User{username: username, name: name}) do
+      "Username: #{username} Name: #{name}"
+    end
+  end
+
 end

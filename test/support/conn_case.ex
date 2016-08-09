@@ -1,4 +1,6 @@
 defmodule Rumbl.ConnCase do
+  import Rumbl.TestHelpers, only: [insert_user: 1]
+
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -27,6 +29,8 @@ defmodule Rumbl.ConnCase do
 
       import Rumbl.Router.Helpers
 
+      import Rumbl.TestHelpers, only: [insert_user: 1, insert_beard: 2]
+
       # The default endpoint for testing
       @endpoint Rumbl.Endpoint
     end
@@ -37,6 +41,15 @@ defmodule Rumbl.ConnCase do
       Ecto.Adapters.SQL.restart_test_transaction(Rumbl.Repo, [])
     end
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    conn = Phoenix.ConnTest.conn()
+
+    if loginname = tags[:login_as] do
+      user = Rumbl.Repo.get_by(Rumbl.User, username: loginname) || insert_user(username: loginname)
+      conn = Plug.Conn.assign(conn, :current_user, user)
+
+      {:ok, conn: conn, user: user}
+    else
+      {:ok, conn: conn}
+    end
   end
 end
