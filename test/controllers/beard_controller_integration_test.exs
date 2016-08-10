@@ -59,5 +59,26 @@ defmodule Rumbl.BeardControllerIntegrationTest do
     assert beard_count_before == beard_count
   end
 
+  @tag login_as: "max"
+  test "users cannot access other peoples beards", %{conn: conn} do
+    other_user = insert_user(username: "SomeoneElse")
+    beard = insert_beard(other_user, name: "The Lodbrok")
+
+    assert_error_sent :not_found, fn ->
+      get(conn, beard_path(conn, :show, beard))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, beard_path(conn, :delete, beard))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, beard_path(conn, :edit, beard))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, beard_path(conn, :update, beard))
+    end
+  end
 
 end
