@@ -49,12 +49,13 @@ defmodule Rumbl.Auth do
   end
 
   def authenticate_user(conn, _opts) do
-      case conn.assigns.current_user do
-        nil -> conn
-               |> put_flash(:error, "Please log in first")
-               |> redirect(to: Helpers.page_path(conn, :index))
-               |> halt()
-        _ -> conn
-      end
+    # Todo: think of a smarter way... maybe check for the key or something
+    case conn.assigns.current_user do
+      nil -> conn
+             |> put_flash(:error, "Please log in first")
+             |> redirect(to: Helpers.page_path(conn, :index))
+             |> halt()
+      _ -> conn
+    end
   end
 end

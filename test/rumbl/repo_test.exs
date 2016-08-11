@@ -1,5 +1,5 @@
 defmodule Rumbl.RepoTest do
-  use ExUnit.Case
+  use Rumbl.ConnCase
 
   import Ecto.Query, only: [from: 2]
 
