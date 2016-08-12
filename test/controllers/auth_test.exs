@@ -3,7 +3,6 @@ defmodule Rumbl.AuthTest do
 
   alias Rumbl.Auth
 
-
   setup do
     conn =
       conn
@@ -25,4 +24,61 @@ defmodule Rumbl.AuthTest do
     refute conn.halted
   end
 
+  test "an auth. user is added to the session", %{conn: conn} do
+    conn =
+      conn
+      |> Auth.login(%Rumbl.User{id: "123"})
+      |> send_resp(:ok, "")
+
+    id =
+      conn
+      |> get("/")
+      |> get_session(:user_id)
+
+    assert id == "123"
+  end
+
+  test "after logut the user is removed from the session", %{conn: conn} do
+    conn =
+      conn
+      |> Auth.login(%Rumbl.User{id: "123"})
+      |> Auth.logout()
+      |> send_resp(:ok, "")
+
+    id = conn
+      |> get("/")
+      |> get_session(:user_id)
+
+    refute id
+  end
+
+  test "call loads a user by the given user id", %{conn: conn} do
+    user = insert_user(%{})
+
+    conn =
+      conn
+      |> put_session(:user_id, user.id)
+      |> Auth.call(Rumbl.Repo)
+
+    assert conn.assigns.current_user.id == user.id
+  end
+
+  test "call uses a current user if set", %{conn: conn} do
+    user = %Rumbl.User{id: "123"}
+
+    conn =
+      conn
+      |> assign(:current_user, user)
+      |> Auth.call(Rumbl.Repo)
+
+    assert conn.assigns.current_user.id == user.id
+  end
+
+  test "call halts if neither a user is set nor an id is provided", %{conn: conn} do
+    conn =
+      conn
+      |> Auth.call(Rumbl.Repo)
+
+    refute conn.assigns.current_user
+  end
 end
