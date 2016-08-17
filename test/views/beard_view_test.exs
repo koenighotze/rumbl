@@ -24,4 +24,12 @@ defmodule Rumbl.BeardViewTest do
     end
   end
 
+  test "new is rendered", %{conn: conn} do
+    changeset = Beard.changeset(%Beard{})
+
+    content = render_to_string(Rumbl.BeardView, "new.html", conn: conn, current_user: %Rumbl.User{username: "foo"}, categories: [], changeset: changeset)
+
+    assert String.contains?(content, "Create a new beard for user")
+  end
+
 end
