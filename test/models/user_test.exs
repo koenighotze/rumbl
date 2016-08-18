@@ -32,4 +32,18 @@ defmodule UserTest do
   test "username must be less than 21 chars long / alternative syntax" do
     assert {:username, {"should be at most %{count} character(s)", [count: 20]}} in errors_on(%User{}, %{@valid | username: String.duplicate("x", 21)})
   end
+
+  test "the password must be at least 8 chars long" do
+    cs = User.registration_changeset(%User{}, %{@valid | password: "1234567"})
+
+    assert {:password, {"should be at least %{count} character(s)", [count: 8]}} in cs.errors
+  end
+
+  test "password is hashed" do
+    cs = User.registration_changeset(%User{}, @valid)
+
+    assert cs.valid?
+    assert %{password: password, password_hash: password_hash} = cs.changes
+    assert Comeonin.Bcrypt.checkpw(password, password_hash)
+  end
 end
