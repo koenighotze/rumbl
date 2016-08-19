@@ -20,7 +20,7 @@
       <td><%= beard.description %></td>
 
       <td class="text-right">
-        <%= link "Show", to: beard_path(@conn, :show, beard), class: "btn btn-default btn-xs" %>
+        <%= link "Show", to: watch_path(@conn, :show, beard), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: beard_path(@conn, :edit, beard), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: beard_path(@conn, :delete, beard), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>

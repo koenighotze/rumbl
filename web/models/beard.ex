@@ -1,5 +1,6 @@
 defmodule Rumbl.Beard do
   use Rumbl.Web, :model
+  import Ecto.Changeset
 
   schema "beards" do
     field :url, :string
@@ -29,6 +30,13 @@ defmodule Rumbl.Beard do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_length(:name, min: 1, max: 20)
     |> assoc_constraint(:category)
+  end
+
+  defimpl String.Chars, for: Rumbl.Beard do
+    def to_string(%Rumbl.Beard{id: id, name: name}) do
+      "Beard: #{id} Name: #{name}"
+    end
   end
 end
