@@ -29,12 +29,27 @@ defmodule Rumbl.WatchViewTest do
       assert id == ""
   end
 
+  test "player_id returns empty if url is neither http nor https" do
+      id =
+        %Beard{url: "udp://youtu.be/zjK0-TWdZxQ"}
+        |> player_id
+
+      assert id == ""
+  end
+
   test "player_id returns the youtube-id if url can be parsed" do
+      id =
+        %Beard{url: "http://youtu.be/zjK0-TWdZxQ"}
+        |> player_id
+
+      assert "zjK0-TWdZxQ" == id
+  end
+
+  test "player_id returns the youtube-id if https is used" do
       id =
         %Beard{url: "https://youtu.be/zjK0-TWdZxQ"}
         |> player_id
 
-      # assert "zjK0-TWdZxQ" == id
-      # TODO fix me
+      assert "zjK0-TWdZxQ" == id
   end
 end
