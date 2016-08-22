@@ -5,6 +5,10 @@ defmodule Rumbl.WatchViewTest do
 
   alias Rumbl.Beard
 
+  @id "m_Loc7qX7FI"
+  @valid_url "https://www.youtube.com/watch?v=m_Loc7qX7FI"
+
+
   test "player_id returns empty if url is missing" do
       id =
         %Beard{}
@@ -39,17 +43,9 @@ defmodule Rumbl.WatchViewTest do
 
   test "player_id returns the youtube-id if url can be parsed" do
       id =
-        %Beard{url: "http://youtu.be/zjK0-TWdZxQ"}
+        %Beard{url: @valid_url}
         |> player_id
 
-      assert "zjK0-TWdZxQ" == id
-  end
-
-  test "player_id returns the youtube-id if https is used" do
-      id =
-        %Beard{url: "https://youtu.be/zjK0-TWdZxQ"}
-        |> player_id
-
-      assert "zjK0-TWdZxQ" == id
+      assert @id == id
   end
 end

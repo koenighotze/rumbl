@@ -2,7 +2,13 @@
 
 <div class="row">
   <div class="col-sm-7">
-    <%= content_tag :div, id: "video", data: [ id: @beard.id, player_id: player_id(@beard)] do %>
+
+    <%= if player_id(@beard) != "" do %>
+      <p>This will show the video of "<%= player_id(@beard) %>"</p>
+      <%= content_tag :div, id: "video", data: [ id: @beard.id, player_id: player_id(@beard)] do %>
+      <% end %>
+    <% else %>
+      Sorry, cannot show video for URL <%= @beard.url %>
     <% end %>
   </div>
   <div class="col-sm-5">
