@@ -1,8 +1,7 @@
 defmodule Rumbl.BeardControllerIntegrationTest do
   use Rumbl.ConnCase
 
-  alias Rumbl.Beard
-  alias Rumbl.Repo
+  alias Rumbl.{Beard, Repo}
 
   @valid_beard %{url: "http://foo.bar.baz", name: "The Lodbrok", description: "Crazy Viking"}
   @invalid_beard %{}

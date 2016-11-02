@@ -2,6 +2,7 @@ defmodule Rumbl.Beard do
   use Rumbl.Web, :model
   import Ecto.Changeset
 
+  @primary_key {:id, Rumbl.Permalink, autogenerate: true}
   schema "beards" do
     field :url, :string
     field :name, :string
@@ -48,6 +49,13 @@ defmodule Rumbl.Beard do
       _ -> changeset
     end
   end
+
+  defimpl Phoenix.Param, for: Rumbl.Beard do
+    def to_param(%{slug: slug, id: id}) do
+      "#{id}-#{slug}"
+     end
+  end
+
 
   defimpl String.Chars, for: Rumbl.Beard do
     def to_string(%Rumbl.Beard{id: id, name: name}) do

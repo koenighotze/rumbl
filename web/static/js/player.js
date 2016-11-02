@@ -5,9 +5,10 @@ let Player = {
       this.onIframeReady(domId, playerId, onReady)
     }
 
-    let youtubeScriptTag = document.createElement("script")
-    youtubeScriptTag.src = "//www.youtube.com/iframe_api"
-    document.head.appendChild(youtubeScriptTag)
+    // todo load script asynchronously or with a timeout
+    // let youtubeScriptTag = document.createElement("script")
+    // youtubeScriptTag.src = "//www.youtube.com/iframe_api"
+    // document.head.appendChild(youtubeScriptTag)
   },
 
   onIframeReady(domId, playerId, onReady) {
