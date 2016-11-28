@@ -18,13 +18,15 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
-
+import socket from "./socket"
+import Beard from "./beard"
 import Player from "./player"
 
-let video = document.getElementById("video")
+let beardVideo = document.getElementById("video")
 
-if (video) {
-  console.log("Initializing video")
-  Player.init(video.id, video.getAttribute("data-player-id"), () => {  console.log("Player ready") })
+if (beardVideo) {
+  console.log("Initializing beardVideo")
+  Beard.init(socket, beardVideo)
 }
+
+

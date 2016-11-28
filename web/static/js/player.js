@@ -3,12 +3,14 @@ let Player = {
     window.onYouTubeIframeAPIReady = () => {
       console.log("Youtube IFrame ready...")
       this.onIframeReady(domId, playerId, onReady)
-    }
+      }
 
     // todo load script asynchronously or with a timeout
-    // let youtubeScriptTag = document.createElement("script")
-    // youtubeScriptTag.src = "//www.youtube.com/iframe_api"
-    // document.head.appendChild(youtubeScriptTag)
+    let youtubeScriptTag = document.createElement("script")
+    youtubeScriptTag.src = "//www.youtube.com/iframe_api"
+    document.head.appendChild(youtubeScriptTag)
+
+    onReady("foo")
   },
 
   onIframeReady(domId, playerId, onReady) {
@@ -30,10 +32,17 @@ let Player = {
   },
 
   getCurrentTime() {
+    if (!this.player) {
+      return 0
+    }
     return Math.floor(this.player.getCurrentTime() * 1000)
   },
 
   seekTo(millis) {
+    if (!this.player) {
+      return
+    }
+
     return this.player.seekTo(millis/1000)
   }
 }

@@ -2,7 +2,7 @@ defmodule Rumbl.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", Rumbl.RoomChannel
+  channel "beards:*", Rumbl.BeardChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
