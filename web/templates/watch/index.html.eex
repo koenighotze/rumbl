@@ -17,13 +17,10 @@
         <h3 class="panel-title">Annotations</h3>
       </div>
 
-      <div id="msg-container" class="panel-body annotations">
-        TODO
-      </div>
+      <div id="msg-container" class="panel-body annotations">TODO</div>
 
       <div class="panel-footer">
-        <textarea id="msg-input" rows="3" class="form-control" placeholder="Comment...">
-        </textarea>
+        <textarea id="msg-input" rows="3" class="form-control" placeholder="Comment..."></textarea>
         <button id="msg-submit" class="btn btn-primary form-control">
           Post comment
         </button>

@@ -10,7 +10,7 @@ let Player = {
     youtubeScriptTag.src = "//www.youtube.com/iframe_api"
     document.head.appendChild(youtubeScriptTag)
 
-    onReady("foo")
+    // onReady("foo")
   },
 
   onIframeReady(domId, playerId, onReady) {

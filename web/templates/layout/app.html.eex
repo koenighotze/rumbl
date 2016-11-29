@@ -41,6 +41,13 @@
       </main>
 
     </div> <!-- /container -->
+
+    <div style="background: green">
+      <pre>
+      <%= inspect assigns %>
+      </pre>
+    </div>
+    <script>window.userToken = "<%= assigns[:user_token] %>"</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
