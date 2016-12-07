@@ -24,7 +24,10 @@ let Beard = {
         vidChannel.on("Pa...ping", ({count}) => console.log(`Ping with count ${count}`))
         vidChannel.on("new_annotation", resp => this.renderAnnotation(msgContainer, resp))
         vidChannel.join()
-                  .receive("ok", resp => console.log("Nice, joined the channel", resp))
+                  .receive("ok", ({annotations}) => {
+                        console.log("Nice, joined the channel");
+                        annotations.forEach(ann => this.renderAnnotation(msgContainer, ann));
+                   })
                   .receive("error", reason => console.log("Boom, could not join", reason))
         postButton.addEventListener("click", e => this.pushAnnotation(e, msgInput, vidChannel)); // this correct?
     },

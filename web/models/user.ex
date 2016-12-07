@@ -13,6 +13,7 @@ defmodule Rumbl.User do
     field :password_hash, :string
 
     has_many :beards, Rumbl.Beard
+    has_many :annotations, Rumbl.Annotation
 
     timestamps
   end
