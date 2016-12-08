@@ -4,7 +4,7 @@
   <div class="col-sm-7">
 
     <%= if player_id(@beard) != "" do %>
-      <p>This will show the video of "<%= player_id(@beard) %>"</p>
+      <p>This shows the video of "<%= player_id(@beard) %>"</p>
       <%= content_tag :div, id: "video", data: [ id: @beard.id, player_id: player_id(@beard)] do %>
       <% end %>
     <% else %>
@@ -17,7 +17,7 @@
         <h3 class="panel-title">Annotations</h3>
       </div>
 
-      <div id="msg-container" class="panel-body annotations">TODO</div>
+      <div id="msg-container" class="panel-body annotations"></div>
 
       <div class="panel-footer">
         <textarea id="msg-input" rows="3" class="form-control" placeholder="Comment..."></textarea>

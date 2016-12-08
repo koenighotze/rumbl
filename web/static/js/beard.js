@@ -23,13 +23,25 @@ let Beard = {
 
         vidChannel.on("Pa...ping", ({count}) => console.log(`Ping with count ${count}`))
         vidChannel.on("new_annotation", resp => this.renderAnnotation(msgContainer, resp))
+
+        msgContainer.addEventListener("click", e => this.movePlayerToPosition(e))
+
         vidChannel.join()
-                  .receive("ok", ({annotations}) => {
+                  .receive("ok", (resp) => {
                         console.log("Nice, joined the channel");
-                        annotations.forEach(ann => this.renderAnnotation(msgContainer, ann));
+                        this.scheduleMessages(msgContainer, resp.annotations)
+                        // annotations.forEach(ann => this.renderAnnotation(msgContainer, ann));
                    })
                   .receive("error", reason => console.log("Boom, could not join", reason))
-        postButton.addEventListener("click", e => this.pushAnnotation(e, msgInput, vidChannel)); // this correct?
+        postButton.addEventListener("click", e => this.pushAnnotation(e, msgInput, vidChannel));
+    },
+    movePlayerToPosition(e) {
+        e.preventDefault()
+        let seconds = e.target.getAttribute("data-seek") || e.target.parentNode.getAttribute("data-seek")
+        if (!seconds) {
+            return
+        }
+        Player.seekTo(seconds)
     },
     pushAnnotation(event, msgInput, vidChannel) {
         console.log("Pushing annotation to server")
@@ -39,6 +51,8 @@ let Beard = {
         }
         vidChannel.push("new_annotation", payload)
                   .receive("error", e => console.log(e))
+                  .receive("ok", () => { msgInput.value = "" })
+
     },
     receiveNewAnnotation(msgContainer, resp) {
         this.renderAnnotation(msgContainer, resp)
@@ -49,11 +63,35 @@ let Beard = {
 
         template.innerHTML = `
             <a href="#" data-seek="${at}">
+                [${this.formatTime(at)}]
                 <b>${user.username}</b>: ${this.esc(body)}
             </a>
         `
         msgContainer.appendChild(template)
         msgContainer.scrollTop = msgContainer.scrollHeight
+    },
+    scheduleMessages(msgContainer, annotations) {
+        setTimeout(() => {
+            let ctime = Player.getCurrentTime()
+            let remaining = this.renderAtTime(annotations, ctime, msgContainer)
+            this.scheduleMessages(msgContainer, remaining)
+        }, 1000)
+    },
+    renderAtTime(annotations, seconds, msgContainer) {
+        return annotations.filter(ann => {
+            if (ann.at > seconds) {
+                return true
+            }
+            else {
+                this.renderAnnotation(msgContainer, ann)
+                return false
+            }
+        })
+    },
+    formatTime(at) {
+        let date = new Date(null)
+        date.setSeconds(at / 1000)
+        return date.toISOString().substr(14, 5)
     },
     esc(body) {
         let div = document.createElement("div")
